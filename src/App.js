@@ -1,77 +1,229 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import appContext from "./Contexts/AppContext.js"
-import { useState } from "react"
-import LoginScreen from "./Pages/Login/LoginScreen.jsx"
-import SignUpScreen from "./Pages/SignUp/SignUpScreen.jsx"
-import HomeScreen from "./Pages/Home/HomeScreen.jsx"
-import ProfileScreen from "./Pages/Profile/ProfileScreen.jsx"
-import AboutUsScreen from "./Pages/AboutUs/AboutUsScreen.jsx"
-import SettingsScreen from "./Pages/Settings/SettingsScreen.jsx"
-import HelpScreen from "./Pages/Help/HelpScreen.jsx"
-import PublishScreen from "./Pages/Publish/PublishScreen.jsx"
-import VisitsScreen from "./Pages/Visits/VisitsScreen.jsx"
-import PlacesScreen from "./Pages/Places/PlacesScreen.jsx"
-import Themes from "./Components/Theme/Theme.js"
-import {ThemeProvider} from "styled-components"
-import Global from "./Components/Theme/Global.js"
-import EditScreen from "./Pages/EditScreen/EditScreen.jsx"
-import EditPublishScreen from "./Pages/EditPublishScreen.jsx/EditPublishScreen.jsx"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-export default function App(){
-   
+import appContext from "./Contexts/AppContext.js";
+import { useState , useEffect} from "react";
+import LoginScreen from "./Pages/Login/LoginScreen.jsx";
+import SignUpScreen from "./Pages/SignUp/SignUpScreen.jsx";
+import SubjectsScreen from "./Pages/Subjects/SubjectsScreen.jsx";
+import NotificationsScreen from "./Pages/Notifications/NotificationsScreen.jsx";
+import TestsScreen from "./Pages/Tests/TestsScreen.jsx";
+import WarningsScreen from "./Pages/Warnings/WarningsScreen.jsx";
+import TimetableScreen from "./Pages/Timetable/Timetable.jsx";
+import AttendanceScreen from "./Pages/Attendance/AttendanceScreen.jsx";
+import EventsScreen from "./Pages/Events/EventsScreen.jsx";
+import TestsScoreScreen from "./Pages/TestsScore/TestsScoreScreen.jsx";
+import MyStudentsScreen from "./Pages/MyStudents/MyStudentsScreen.jsx";
+import Themes from "./Components/Theme/Theme.js";
+import { ThemeProvider } from "styled-components";
+import Global from "./Components/Theme/Global.js";
+import dotenv from "dotenv";
+import NfcRecordScreen from "./Pages/NfcRecord/NfcRecordScreen.jsx";
+import ChatScreen from "./Pages/EditPublishScreen.jsx/ChatScreen.jsx";
+import TDMScreen from "./Pages/TDM/TDMScreen.jsx";
+import ResetPasswordScreen from "./Pages/ResetPassword/ResetPasswordScreen.jsx";
+import ForgotPasswordScreen from "./Pages/ForgotPassword/ForgotPasswordScreen.jsx";
+import { useContext } from "react";
 
-  
-  //Login do usuario
-    const [token , setToken]=useState()
-    const [login , setLogin]=useState()
+const PrivateRoute = ({ children }) => {
+  const { token } = useContext(appContext);
 
-    //layout
-    const [view , setView]=useState(false)
-    const [viewNavBarr, setViewNavBarr] = useState("list-outline")
-    const [appear, setAppear] = useState(false)
-    const [desappear, setDesappear] = useState(true)
 
-    //Local
-    const [localizationName , setLocalizationName]=useState("")
-    const [latitude , setLatitude ]=useState(0)
-    const [longitude , setLongitude ]=useState(0)
-    const [autocomplete , setAutocomplete]=useState("")
+  if (token) {
+    return children; 
+  }
 
-    //Theme
-    const  [theme , setTheme]=useState("ligth")
+  return <Navigate to="/" />;
+};
+export default function App() {
+  const [token, setToken] = useState(() => {
+    return localStorage.getItem('token') || '';
+  });
 
-    //API
-    const API_URI="http://localhost:5000/"
 
- 
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem('token', token);
+    }
+  }, [token]); 
+  const [login, setLogin] = useState(() => {
+    const storedLogin = localStorage.getItem('login');
+    return storedLogin ? JSON.parse(storedLogin) : ''; 
+  });
 
-    return(<>
-    
-    <appContext.Provider value={{ API_URI,  view , setView , token , setToken  , login , setLogin , theme , setTheme  , autocomplete , setAutocomplete  , viewNavBarr , setViewNavBarr, appear, setAppear , desappear ,setDesappear ,latitude , setLatitude , longitude , setLongitude , setLocalizationName , localizationName}} >
-    <ThemeProvider theme={Themes[theme]} >
-        <Global/>
-   <BrowserRouter>
-    <Routes>
-        
-        <Route  path="/" element={<LoginScreen/>}></Route> 
-        <Route  path="/sign-up" element={<SignUpScreen/>}></Route> 
-        <Route  path="/home" element={<HomeScreen/>}></Route> 
-        <Route  path="/profile/:id" element={<ProfileScreen/>}></Route> 
-        <Route  path="/settings" element={<SettingsScreen/>}></Route> 
-        <Route  path="/aboutUs" element={<AboutUsScreen/>}></Route> 
-        <Route  path="/help" element={<HelpScreen/>}></Route> 
-        <Route  path="/publish" element={<PublishScreen/>}></Route> 
-        <Route  path="/visits" element={<VisitsScreen/>}></Route> 
-        <Route  path="/places" element={<PlacesScreen/>}></Route> 
-        <Route  path="/edit/:userId" element={<EditScreen/>}></Route> 
-        <Route  path="/editPublish/:publishId" element={<EditPublishScreen/>}></Route> 
-       
-    </Routes>    
-    </BrowserRouter>
-   
-    </ThemeProvider>
-    </appContext.Provider>
-    
-    </>)
+  useEffect(() => {
+    if (login.id_usuario ) {
+      localStorage.setItem('login', JSON.stringify(login)); 
+    }
+  }, [login]);
+
+  //layout
+  const [view, setView] = useState(true);
+  const [viewNavBarr, setViewNavBarr] = useState("list-outline");
+  const [appear, setAppear] = useState(false);
+  const [desappear, setDesappear] = useState(true);
+
+  //Local
+  const [localizationName, setLocalizationName] = useState("");
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
+  const [autocomplete, setAutocomplete] = useState("");
+
+  //Theme
+  const [theme, setTheme] = useState("light");
+
+  //API
+  const API_URI = "http://localhost:8080/";
+
+  return (
+    <>
+      <appContext.Provider
+        value={{
+          API_URI,
+          view,
+          setView,
+          token,
+          setToken,
+          login,
+          setLogin,
+          theme,
+          setTheme,
+          autocomplete,
+          setAutocomplete,
+          viewNavBarr,
+          setViewNavBarr,
+          appear,
+          setAppear,
+          desappear,
+          setDesappear,
+          latitude,
+          setLatitude,
+          longitude,
+          setLongitude,
+          setLocalizationName,
+          localizationName,
+        }}
+      >
+        <ThemeProvider theme={Themes[theme]}>
+          <Global />
+          <BrowserRouter>
+            <Routes>
+              {/* Rutas públicas */}
+              <Route path="/" element={<LoginScreen />} />
+              <Route path="/sign-up" element={<SignUpScreen />} />
+              <Route
+                path="/forgot-password"
+                element={<ForgotPasswordScreen />}
+              />
+              <Route
+                path="/reset-password/:token"
+                element={<ResetPasswordScreen />}
+              />
+
+              {/* Rutas protegidas */}
+              <Route
+                path="/subjects"
+                element={
+                  <PrivateRoute>
+                    <SubjectsScreen />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/notifications"
+                element={
+                  <PrivateRoute>
+                    <NotificationsScreen />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/warnings"
+                element={
+                  <PrivateRoute>
+                    <WarningsScreen />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/tests"
+                element={
+                  <PrivateRoute>
+                    <TestsScreen />
+                  </PrivateRoute>
+                }
+              />
+
+              <Route
+                path="/timeTable"
+                element={
+                  <PrivateRoute>
+                    <TimetableScreen />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/attendance"
+                element={
+                  <PrivateRoute>
+                    <AttendanceScreen />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/events"
+                element={
+                  <PrivateRoute>
+                    <EventsScreen />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/testsScore"
+                element={
+                  <PrivateRoute>
+                    <TestsScoreScreen />
+                  </PrivateRoute>
+                }
+              />
+
+              <Route
+                path="/nfcRecord"
+                element={
+                  <PrivateRoute>
+                    <NfcRecordScreen />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/myStudents"
+                element={
+                  <PrivateRoute>
+                    <MyStudentsScreen />
+                  </PrivateRoute>
+                }
+              />
+
+              <Route
+                path="/chat"
+                element={
+                  <PrivateRoute>
+                    <ChatScreen />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/tdm"
+                element={
+                  <PrivateRoute>
+                    <TDMScreen />
+                  </PrivateRoute>
+                }
+              />
+            </Routes>
+          </BrowserRouter>
+        </ThemeProvider>
+      </appContext.Provider>
+    </>
+  );
 }
-//  <Route  path="/home/:idDaOption" element={<OptionScreen/>}></Route> 
+

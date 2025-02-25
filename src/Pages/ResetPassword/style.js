@@ -26,7 +26,7 @@ align-items: center;
 background-color:white;
 border-radius:5px;
 width:400px;
-height:350px
+height:200px
 
 `
 export const ContainerInputsSection2=styled.div`
@@ -51,7 +51,7 @@ text-align:center;
 `
 export const LoginText=styled.h1`
 text-align:center;
- font-size:40px;
+ font-size:20px;
   font-weight:bold;
  color:${({theme})=> theme.colorWelcome};
 
@@ -75,7 +75,6 @@ color: white;
             box-shadow: 5px 5px 22px 5px rgba(0, 0, 0, 0.24);
             /* Lowering the shadow */
         }
-
 `
 export const SendToSignUp=styled.h1`
 

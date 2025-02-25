@@ -34,7 +34,7 @@ export default function ProfileNavBarr({id}) {
     setDesappear(true)
     setView(false)
     setViewNavBarr("list-outline")
-    navigate('/home')
+    navigate('/subjects')
   }
 
   return (<>

@@ -51,7 +51,7 @@ const [rateNote , setRateNote]=useState("")
     try {
         const promise= await axios.put(`${API_URI}editPublishComent/${publishId}` , body  , headers)  
      setView(false)
-     navigate("/home")
+     navigate("/subjects")
    
      
     } catch (error) {
@@ -75,7 +75,7 @@ async  function  editRate(){
     try {
         const promise= await axios.put(`${API_URI}editPublishRate/${publishId}`, body  , headers)  
         setView(false)
-        navigate("/home")
+        navigate("/subjects")
     } catch (error) {
         console.log(error.response.data)
     }

@@ -23,7 +23,7 @@ export default function Switch(){
   async  function changePosition(){
     
         try {
-            if(theme==='ligth'){
+            if(theme==='light'){
 
           
                 const body={
@@ -40,7 +40,7 @@ export default function Switch(){
         }else{
         
                 const body={
-                    mode:"ligth"
+                    mode:"light"
                 }
                 const headers={
                     headers:{
@@ -49,7 +49,7 @@ export default function Switch(){
                  }
             await axios.put(`http://localhost:5000/user/${login.id}`, body  , headers)
            
-            setTheme('ligth')
+            setTheme('light')
             setPosition(false)
         }
       

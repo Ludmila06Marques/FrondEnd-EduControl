@@ -41,7 +41,7 @@ function InsertButton({ coment, urlImage, rateNote, localizationName, latitude, 
     try {
       await axios.post(`${API_URI}publish` , body  , headers)
 
-      navigate('/home')
+      navigate('/subjects')
     } catch (error) {
       alert(error)
     }

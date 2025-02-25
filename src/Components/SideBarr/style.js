@@ -7,7 +7,7 @@ display: ${props => props.view ? "flex": "none"};
 flex-direction: column;
 z-index: 2;
 height: 100vh;
-width: 150px;
+width: 250px;
 background-color: ${({theme})=> theme.colorBlack};
 padding: 5px;
 ion-icon{
@@ -60,8 +60,8 @@ ion-icon{
 }
 `
 export const Text=styled.h1`
- font-size: 15px;
-    font-weight: bold;
+ font-size: 20px;
+
     color: white;
 
 `

@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom"
 export default function NavBarr() {
     const navigate = useNavigate()
 
-    const { setLogin, setTheme, view, setView , viewNavBarr , setViewNavBarr, appear, setAppear , desappear ,setDesappear} = useContext(appContext)
+    const { setLogin, setTheme, view, setView , viewNavBarr , setViewNavBarr, appear, setAppear , desappear ,setDesappear, setToken} = useContext(appContext)
 
 
  
@@ -30,8 +30,9 @@ export default function NavBarr() {
         setView(false)
         setViewNavBarr("list-outline")
         setLogin([])
-        setTheme('ligth')
+        setTheme('light')
         navigate('/')
+        setToken(null)
     }
 
     function goHome() {
@@ -39,7 +40,7 @@ export default function NavBarr() {
         setDesappear(true)
         setView(false)
         setViewNavBarr("list-outline")
-        navigate('/home')
+        navigate('/subjects')
     }
 
     return (<>

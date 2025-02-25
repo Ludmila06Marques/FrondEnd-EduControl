@@ -1,5 +1,5 @@
 import * as S from "./style.js"
-import logo from "../../img/sagrada.png"
+import logo from "../../img/logo.jpg"
 
 export default function Logo(){
     return(<>
